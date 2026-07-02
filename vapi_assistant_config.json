@@ -1,0 +1,83 @@
+{
+  "name": "Dental Clinic Receptionist",
+  "firstMessage": "Hi, thanks for calling Bright Smile Dental! I can help you book an appointment. Could I get your full name, please?",
+  "serverUrl": "https://46a5-117-99-251-96.ngrok-free.app/webhook/vapi",
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4o",
+    "systemPrompt": "You are a friendly, efficient dental clinic receptionist booking appointments over the phone. Collect the patient's name, then the service they need, then their preferred date/time, then confirm before booking. Always call the matching tool for whatever the caller just told you -- do not skip steps or make up appointment details yourself; the server tells you what's available and what to say next. Keep responses short and conversational, like a real receptionist on the phone.",
+    "functions": [
+      {
+        "name": "providePatientName",
+        "description": "Call this once the caller has given their full name.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Patient's full name"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      },
+      {
+        "name": "selectService",
+        "description": "Call this once the caller has said which dental service they want (cleaning, checkup, filling, root canal, whitening, extraction, or braces consultation).",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "service": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "service"
+          ]
+        }
+      },
+      {
+        "name": "selectDateTime",
+        "description": "Call this once the caller has stated a preferred day and time for the appointment.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "preferredDateTime": {
+              "type": "string",
+              "description": "The caller's requested date/time, in natural language or ISO 8601 (e.g. 'next Tuesday at 3pm' or '2026-07-08T15:00:00')"
+            }
+          },
+          "required": [
+            "preferredDateTime"
+          ]
+        }
+      },
+      {
+        "name": "confirmBooking",
+        "description": "Call this once the caller has explicitly said yes or no to confirming the proposed appointment slot.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "confirm": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "confirm"
+          ]
+        }
+      }
+    ]
+  },
+  "voice": {
+    "provider": "vapi",
+    "voiceId": "Neha"
+  },
+  "serverMessages": [
+    "tool-calls",
+    "status-update",
+    "end-of-call-report"
+  ]
+}

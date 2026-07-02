@@ -1,0 +1,15 @@
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.4
+pydantic-settings==2.7.0
+google-api-python-client==2.157.0
+google-auth==2.37.0
+google-auth-httplib2==0.2.0
+twilio==9.4.1
+google-cloud-firestore==2.19.0
+python-dotenv==1.0.1
+python-dateutil==2.9.0.post0
+sqlalchemy>=2.0.36
+psycopg2-binary>=2.9.10
+pyngrok==7.1.6
+tzdata
